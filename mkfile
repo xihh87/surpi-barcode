@@ -5,8 +5,11 @@ BARCODES=`{find data/ -type f -name '*.fastq.gz' \
 barcodes:V: $BARCODES
 
 'results/barcodes/(.*/)(.*)\.fastq':R:	'data/\1'
-	echo target=$target
-	echo prereq=$prereq
-	echo stem1=$stem1
-	echo stem2=$stem2
-	find "$prereq" -type f -name '*.fastq'
+	dir=$prereq
+	barcode=$stem2
+	target=$target
+	mkdir -p `dirname "$target"`
+	find "$dir" -type f -name '*.fastq.gz' \
+		| xargs zcat \
+		| sed "s#\(@.*\)#\1:$barcode#g" \
+		> "$target"
