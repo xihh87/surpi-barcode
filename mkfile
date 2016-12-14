@@ -14,7 +14,6 @@ barcodes:V: $BARCODES
 	orientation=$stem3
 	target=$target
 	mkdir -p `dirname "$target"`
-
 	prefix="$barcode"'*'"$orientation"'*'
 	find "$dir" -type f \
 		-name "$prefix"'.fastq.gz' \
